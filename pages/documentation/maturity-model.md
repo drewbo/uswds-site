@@ -119,7 +119,7 @@ Government websites include components that aren’t included in USWDS yet. Use 
 #### 1: Add USWDS code and adjust settings.
 
 - Add USWDS to your project [with NPM]({{ site.baseurl }}/documentation/developers/#install-using-npm) or by [downloading the source from Github]({{ site.baseurl }}/documentation/developers/#download-and-install).
-- Compile the Sass source code using the [guidelines in the documentation]({{ site.baseurl }}/documentation/developers/#sass-compilation-requirements) or by using [uswds-gulp](https://github.com/uswds/uswds-gulp).
+- Compile the Sass source code using the [guidelines in the documentation]({{ site.baseurl }}/documentation/developers/#sass-compilation-requirements) or by using [uswds-gulp](https://github.com/uswds/uswds-gulp) available via GitHub.
 - Compile the Javascript source code using the [guidelines in the documentation]({{ site.baseurl }}/documentation/developers/#js-customization) or [download a precompiled version]({{ site.baseurl }}/documentation/developers/#download-and-install).
 - Add USWDS Javascript to your page templates.
 - Add USWDS CSS to your page templates.
@@ -174,7 +174,7 @@ understanding and adopting the design principles and individual components.
 This is a work in progress, and we want your input.
 - Share your feedback and collaborate with the [USWDS community](https://digital.gov/communities/uswds/)
 on the [#uswds-public](https://app.slack.com/client/T025AQGAN/C3F14AHSQ){:target="_blank" rel="noopener"} Slack channel.
-- If you can't access slack, email us your feedback directly at [uswds@support.digitalgov.gov](mailto:uswds@support.digitalgov.gov)
+- If you can't access slack, email us your feedback directly at [{{ site.uswds_email }}](mailto:{{ site.uswds_email }})
 
 If you’re new to the maturity model, listen to [USWDS January Monthly Call](https://digital.gov/event/2020/01/16/uswds-january-monthly-call/)
 on the using the USWDS maturity model.

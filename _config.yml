@@ -18,7 +18,7 @@ permalink: /whats-new/updates/:year/:month/:day/:title/
 # this ensure that posts with future dates are published
 future: true
 
-encoding: utf-8
+encoding: "UTF-8"
 
 markdown: kramdown
 kramdown:
@@ -64,13 +64,13 @@ repos:
 collections:
   components:
     output: true
-    permalink: /:path/
+    permalink: /:path
   templates:
     output: true
-    permalink: /:path/
+    permalink: /:path
   utilities:
     output: true
-    permalink: /:path/
+    permalink: /:path
   next:
     output: true
     permalink: /:collection/:title

@@ -58,6 +58,9 @@ jobs:
             - gem-cache-{{ checksum "Gemfile.lock" }}
             - gem-cache
       - run:
+          name: Link bundle path
+          command: bundle config set --local path 'vendor/bundle'
+      - run:
           name: Starting detached server
           command: npm run start-detached
           background: true
@@ -69,9 +72,6 @@ jobs:
           command: npm run build-all-assets
       - snyk/scan:
           organization: uswds
-      - run:
-          name: Link bundle path
-          command: bundle config set --local path 'vendor/bundle'
       - run:
           name: Run rspec
           command: bundle exec rspec

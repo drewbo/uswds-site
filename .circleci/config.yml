@@ -11,9 +11,6 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - npm-cache-{{ checksum "package-lock.json" }}
-      - restore_cache:
-          keys:
             - gem-cache-{{ checksum "Gemfile.lock" }}
             - gem-cache
       - run:

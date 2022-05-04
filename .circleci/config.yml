@@ -66,6 +66,9 @@ jobs:
       - snyk/scan:
           organization: uswds
       - run:
+          name: Link bundle path
+          command: bundle --path vendor/bundle
+      - run:
           name: Run rspec
           command: bundle exec rspec
       - run:

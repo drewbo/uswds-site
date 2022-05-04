@@ -7,6 +7,8 @@ jobs:
   build:
     docker:
       - image: cimg/ruby:3.0.4-browsers
+        environment:
+          NOKOGIRI_USE_SYSTEM_LIBRARIES: true
     steps:
       - checkout
       - restore_cache:
@@ -36,18 +38,46 @@ jobs:
       - run:
           name: Build USWDS if needed
           command: npm run build-uswds
+      - run:
+          name: Build site assets
+          command: npm run build-all-assets
+      - run:
+          name: Start detached
+          command: npm run start-detached
       - save_cache:
           key: npm-cache-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - _site
+  test:
+    docker:
+      - image: cimg/ruby:3.0.4-browsers
+    parallelism: 5
+    steps:
+      - checkout
       - snyk/scan:
           organization: uswds
       - run:
-          name: Run test
-          command: npm run test:ci
+          name: Run rspec
+          command: bundle exec rspec
+      - run:
+          name: Run HTML proofer
+          command: npm run proof
+      - run:
+          name: Run pa11y-ci
+          command: npm run pa11y-ci:sitemap
+      - run:
+          name: Run pa11y-ci
+          command: pa11y-ci:sitemap-mobile
 
 workflows:
   version: 2
   circle-uswds-site:
     jobs:
       - build
+      - test:
+          requires:
+            - build

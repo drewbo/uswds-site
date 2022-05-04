@@ -74,7 +74,6 @@ jobs:
           command: pa11y-ci:sitemap-mobile
 
 workflows:
-  version: 2
   circle-uswds-site:
     jobs:
       - build

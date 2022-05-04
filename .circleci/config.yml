@@ -60,19 +60,20 @@ jobs:
       - run:
           name: Build site assets
           command: npm run build-all-assets
+      - persist_to_workspace:
+          root: .
+          paths:
+            - "./_site"
+            - "./assets"
+            - "vendor/bundle"
   test:
     docker:
       - image: cimg/ruby:3.0.4-browsers
     parallelism: 5
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - npm-cache-{{ checksum "package-lock.json" }}
-      - restore_cache:
-          keys:
-            - gem-cache-{{ checksum "Gemfile.lock" }}
-            - gem-cache
+      - attach_workspace:
+          at: .
       - snyk/scan:
           organization: uswds
       - run:

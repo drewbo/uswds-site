@@ -58,6 +58,10 @@ jobs:
             - gem-cache-{{ checksum "Gemfile.lock" }}
             - gem-cache
       - run:
+          name: Starting detached server
+          command: npm run start-detached
+          background: true
+      - run:
           name: Build USWDS if needed
           command: npm run build-uswds
       - run:
@@ -75,8 +79,14 @@ jobs:
           name: Run HTML proofer
           command: npm run proof
       - run:
+          name: Check if detached server is running
+          shell: /bin/sh
+          command: |
+            wget --retry-connrefused --waitretry=1 --read-timeout=20 --timeout=15 -t 10 http://localhost:4000
+            :
+      - run:
           name: Run pa11y-ci
-          command: npm run start-detached && npm run pa11y-ci:sitemap & npm run pa11y-ci:sitemap-mobile
+          command: npm run pa11y-ci:sitemap & npm run pa11y-ci:sitemap-mobile
 
 workflows:
   circle-uswds-site:

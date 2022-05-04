@@ -31,7 +31,7 @@
   "scripts": {
     "axe": "node config/run-axe.js",
     "build": "gulp build && bundle exec jekyll build",
-    "build-all-assets": "npm run build-fonts && npm run build-img && npm run build-js && npm run build-css",
+    "build-all-assets": "npm run build-fonts & npm run build-img & npm run build-js & npm run build-css",
     "build-css": "gulp build-sass",
     "build-css-components": "gulp build-sass-components",
     "build-css-custom": "gulp build-sass-custom",

@@ -76,7 +76,7 @@ jobs:
           command: npm run proof
       - run:
           name: Run pa11y-ci
-          command: npm run start-detached && npm run pa11y-ci:sitemap & npm run pa11y-ci:sitemap-mobile
+          command: npm run start-detached && npm run pa11y-ci:sitemap && npm run pa11y-ci:sitemap-mobile
 
 workflows:
   circle-uswds-site:

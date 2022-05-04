@@ -63,39 +63,24 @@ jobs:
       - run:
           name: Build site assets
           command: npm run build-all-assets
-      - persist_to_workspace:
-          root: .
-          paths:
-            - "_site"
-            - "assets"
-            - "vendor/bundle"
-  test:
-    executor: my-executor
-    parallelism: 5
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
       - snyk/scan:
           organization: uswds
       - run:
           name: Run rspec
-          command: |
-            bundle install
-            bundle exec rspec
+          command: bundle exec rspec
       - run:
           name: Run HTML proofer
           command: npm run proof
       - run:
-          name: Run pa11y-ci
-          command: |
-            npm run start-detached
-            npm run pa11y-ci:sitemap
+          name: Starting detached server
+          command: npm run start-detached
+          background: true
       - run:
           name: Run pa11y-ci
-          command: |
-            npm run start-detached
-            npm run pa11y-ci:sitemap-mobile
+          command: npm run pa11y-ci:sitemap
+      - run:
+          name: Run pa11y-ci
+          command: npm run pa11y-ci:sitemap-mobile
 
 workflows:
   circle-uswds-site:
@@ -106,6 +91,3 @@ workflows:
           requires:
             - install_ruby_deps
             - install_node_deps
-      - test:
-          requires:
-            - build

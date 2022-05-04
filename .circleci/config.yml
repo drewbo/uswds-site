@@ -82,7 +82,9 @@ jobs:
           background: true
       - run:
           name: Run rspec
-          command: bundle exec rspec
+          command: |
+            bundle install
+            bundle exec rspec
       - run:
           name: Run HTML proofer
           command: npm run proof

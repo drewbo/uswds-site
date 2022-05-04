@@ -79,10 +79,6 @@ jobs:
       - snyk/scan:
           organization: uswds
       - run:
-          name: Start detached
-          command: npm run start-detached
-          background: true
-      - run:
           name: Run rspec
           command: |
             bundle install
@@ -92,10 +88,14 @@ jobs:
           command: npm run proof
       - run:
           name: Run pa11y-ci
-          command: npm run pa11y-ci:sitemap
+          command: |
+            npm run start-detached
+            npm run pa11y-ci:sitemap
       - run:
           name: Run pa11y-ci
-          command: pa11y-ci:sitemap-mobile
+          command: |
+            npm run start-detached
+            npm run pa11y-ci:sitemap-mobile
 
 workflows:
   circle-uswds-site:

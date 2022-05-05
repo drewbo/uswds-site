@@ -32,9 +32,9 @@ jobs:
           paths:
             - vendor/bundle
       - persist_to_workspace:
+          root: ~/
           paths:
             - "vendor/bundle"
-          root: ~/
   install_node_deps:
     executor: my-executor
     steps:
@@ -51,10 +51,10 @@ jobs:
             - node_modules
   build:
     executor: my-executor
-    attach_to_workspace:
-      at: ~/
     steps:
       - checkout
+      - attach_to_workspace:
+          at: ~/
       - restore_cache:
           keys:
             - npm-cache-{{ checksum "package-lock.json" }}
@@ -77,10 +77,10 @@ jobs:
   test:
     executor: my-executor
     parallelism: 5
-    attach_to_workspace:
-      at: ~/
     steps:
       - checkout
+      - attach_to_workspace:
+          at: ~/
       - run:
           name: Run rspec
           command: bundle exec rspec

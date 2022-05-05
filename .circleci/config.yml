@@ -98,6 +98,10 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run:
+          name: Link bundler
+          command: |
+            bundle config set --local path '~/project/vendor/bundle'
+      - run:
           name: Run pa11y-ci desktop
           command: npm run start-detached && npm run pa11y-ci:sitemap
       - run:

@@ -73,7 +73,7 @@ jobs:
           paths:
             - "_site"
             - "assets"
-            - "node_modules/@uswds/uswds/html-templates"
+            - "node_modules"
   test:
     executor: my-executor
     parallelism: 5

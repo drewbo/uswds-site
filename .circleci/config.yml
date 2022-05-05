@@ -57,9 +57,6 @@ jobs:
             - gem-cache-{{ checksum "Gemfile.lock" }}
             - gem-cache
       - run:
-          name: Link bundle path
-          command: bundle config set --local path 'vendor/bundle'
-      - run:
           name: Build USWDS if needed
           command: npm run build-uswds
       - run:
@@ -72,7 +69,9 @@ jobs:
       - checkout
       - run:
           name: Run rspec
-          command: bundle exec rspec
+          command: |
+            bundle config set --local path 'vendor/bundle'
+            bundle exec rspec
       - run:
           name: Run HTML proofer
           command: npm run proof

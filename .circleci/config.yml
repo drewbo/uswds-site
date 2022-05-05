@@ -83,7 +83,9 @@ jobs:
           at: ~/project
       - run:
           name: Run rspec
-          command: bundle exec rspec
+          command: |
+            bundle config set --local path '~/project/vendor/bundle'
+            bundle exec rspec
       - run:
           name: Run HTML proofer
           command: npm run proof

@@ -76,7 +76,6 @@ jobs:
             - "node_modules"
   test:
     executor: my-executor
-    parallelism: 5
     steps:
       - checkout
       - attach_workspace:
@@ -91,6 +90,13 @@ jobs:
           command: npm run proof
       - snyk/scan:
           organization: uswds
+  test_a11y:
+    executor: my-executor
+    parallelism: 2
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
       - run:
           name: Run pa11y-ci desktop
           command: npm run start-detached && npm run pa11y-ci:sitemap
@@ -108,5 +114,8 @@ workflows:
             - install_ruby_deps
             - install_node_deps
       - test:
+          requires:
+            - build
+      - test_a11y:
           requires:
             - build

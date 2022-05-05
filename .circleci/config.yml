@@ -31,6 +31,10 @@ jobs:
           key: gem-cache-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+      - persist_to_workspace:
+          paths:
+            - "vendor/bundle"
+          root: ~/
   install_node_deps:
     executor: my-executor
     steps:
@@ -47,6 +51,8 @@ jobs:
             - node_modules
   build:
     executor: my-executor
+    attach_to_workspace:
+      at: ~/
     steps:
       - checkout
       - restore_cache:
@@ -62,16 +68,22 @@ jobs:
       - run:
           name: Build site assets
           command: npm run build-all-assets
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - "_site"
+            - "assets"
+            - "node_modules/@uswds/uswds/html-templates"
   test:
     executor: my-executor
     parallelism: 5
+    attach_to_workspace:
+      at: ~/
     steps:
       - checkout
       - run:
           name: Run rspec
-          command: |
-            bundle config set --local path 'vendor/bundle'
-            bundle exec rspec
+          command: bundle exec rspec
       - run:
           name: Run HTML proofer
           command: npm run proof

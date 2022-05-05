@@ -46,8 +46,7 @@ jobs:
           paths:
             - node_modules
   build:
-    docker:
-      - image: cimg/ruby:3.0.4-browsers
+    executor: my-executor
     steps:
       - checkout
       - restore_cache:
@@ -66,17 +65,25 @@ jobs:
       - run:
           name: Build site assets
           command: npm run build-all-assets
-      - snyk/scan:
-          organization: uswds
-      - run:
+    test:
+      parallelism: 5
+      steps:
+        - checkout
+        - run:
           name: Run rspec
           command: bundle exec rspec
-      - run:
+        - run:
           name: Run HTML proofer
           command: npm run proof
-      - run:
-          name: Run pa11y-ci
-          command: npm run start-detached && npm run pa11y-ci:sitemap && npm run pa11y-ci:sitemap-mobile
+        - snyk/scan:
+          organization: uswds
+        - run:
+          name: Run pa11y-ci desktop
+          command: npm run start-detached && npm run pa11y-ci:sitemap
+        - run:
+          name: Run pa11y-ci mobile
+          command: npm run start-detached && npm run pa11y-ci:sitemap-mobile
+
 
 workflows:
   circle-uswds-site:
@@ -87,3 +94,6 @@ workflows:
           requires:
             - install_ruby_deps
             - install_node_deps
+      - test:
+          requires:
+            - build

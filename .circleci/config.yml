@@ -96,7 +96,6 @@ jobs:
           name: Run pa11y-ci mobile
           command: npm run start-detached && npm run pa11y-ci:sitemap-mobile
 
-
 workflows:
   circle-uswds-site:
     jobs:
